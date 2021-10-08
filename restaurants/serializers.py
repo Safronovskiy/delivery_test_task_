@@ -46,7 +46,6 @@ class DishSerializer(AddCreateMethodMixin, serializers.ModelSerializer):
         fields = '__all__'
 
 
-
 class TypeOfDishSerializer(AddCreateMethodMixin, serializers.ModelSerializer):
     """ ... """
     class Meta:

@@ -3,11 +3,12 @@ from slugify import slugify
 
 
 class AddCreateMethodMixin:
-    """ Provides create() and update() methods ... """
+    """
+    Provides create() and update() methods for restaurants app serializers
+    """
 
     def create(self, validated_data):
         instance = self.Meta.model(**validated_data)
-        print(instance.__dict__)
         if hasattr(instance, 'slug'):
             instance.slug = slugify(validated_data.get('title'))
         instance.save()

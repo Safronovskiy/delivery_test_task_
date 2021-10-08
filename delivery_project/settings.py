@@ -68,6 +68,7 @@ REST_FRAMEWORK ={
         'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',       # remove it after project copmlete
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
