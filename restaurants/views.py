@@ -65,16 +65,11 @@ class TypeOfDishViewSet(ModelViewSet):
 
 class CuisineViewSet(ModelViewSet):
     """ ... """
-    parser_classes = [MultiPartParser, FormParser]
     permission_classes = [AllowAny]
     queryset = CuisineModel.objects.all()
     serializer_class = CuisineSerializer
 
 
-class TypeDishUploadImage(CreateModelMixin, GenericViewSet):
-    """ ... """
-    permission_classes = [AllowAny]
-    parser_classes = [MultiPartParser, FormParser]
-    serializer_class = DishSerializer
+
 
 

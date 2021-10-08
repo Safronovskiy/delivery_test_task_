@@ -1,3 +1,4 @@
+/.env
 /db.sqlite3
 /media/
 /static/
@@ -16,3 +17,4 @@
 
 /restaurants/migrations/*
 !/restaurants/migrations/__init__.py
+
