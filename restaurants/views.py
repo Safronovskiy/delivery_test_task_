@@ -1,10 +1,9 @@
-from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
     AllowAny,
 )
 from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.viewsets import ModelViewSet
 from restaurants.models import (
     RestaurantModel,
     MenuModel,

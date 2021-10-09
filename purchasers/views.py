@@ -1,6 +1,9 @@
-from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.filters import SearchFilter, OrderingFilter
 from purchasers.models import (
     PurchaserModel,
     PurchaserAddressModel,
@@ -11,17 +14,31 @@ from purchasers.serializers import (
     PurchaserAddressSerializer,
     PurchaserCardSerializer,
 )
+from purchasers.view_services import (
+    PurchaserActionMixin,
+)
 
 
-class PurchaserViewSet(ModelViewSet):
+
+class PurchaserViewSet(ModelViewSet, PurchaserActionMixin):
     """ ... """
     permission_classes = [AllowAny]
+    parser_classes = [MultiPartParser, FormParser]
     queryset = PurchaserModel.objects.all()
     serializer_class = PurchaserSerializer
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['user_id', 'second_name', 'first_name']
     ordering_fields = ['second_name', 'user_id']
 
+    def get_queryset(self):
+        if self.action == 'get_addresses':
+            self.__class__.serializer_class = PurchaserAddressSerializer
+            return super().get_queryset()
+        if self.action == 'get_cards':
+            self.__class__.serializer_class = PurchaserCardSerializer
+            return super().get_queryset()
+
+        return super().get_queryset()
 
 
 class PurchaserAddressViewSet(ModelViewSet):
@@ -43,3 +60,4 @@ class PurchaserCardViewSet(ModelViewSet):
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = []
     ordering_fields = []
+
