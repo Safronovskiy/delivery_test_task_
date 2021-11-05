@@ -2,7 +2,7 @@ from slugify import slugify
 
 
 
-class AddCreateMethodMixin:
+class AddCreateUpdateMethodsMixin:
     """
     Provides create() and update() methods for restaurants app serializers
     """
@@ -20,5 +20,6 @@ class AddCreateMethodMixin:
             setattr(instance, attr, value)
         if hasattr(instance, 'slug'):
             instance.slug = slugify(validated_data.get('title', instance.slug))
+        # update for m2m
         instance.save()
         return instance

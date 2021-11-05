@@ -4,7 +4,6 @@ from restaurants.models import (
     MenuModel,
     DishModel,
     TypeOfDishModel,
-    CuisineModel,
 )
 
 
@@ -26,10 +25,4 @@ class DishModelAdmin(admin.ModelAdmin):
 @admin.register(TypeOfDishModel)
 class TypeOfDishModelAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug']
-    prepopulated_fields = {'slug': ['title']}
-
-
-
-@admin.register(CuisineModel)
-class CuisineModelAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ['title']}

@@ -8,6 +8,7 @@ class PurchaserModel(models.Model):
     first_name = models.CharField(max_length=250, blank=True, null=True)
     second_name = models.CharField(max_length=250, blank=True, null=True)
     image = models.ImageField(upload_to='purchaser_imgs/%Y/%m', blank=True, null=True)
+    phone = models.CharField(max_length=250)
 
     class Meta:
         ordering = ('second_name',)
@@ -18,8 +19,6 @@ class PurchaserModel(models.Model):
     def full_name(self):
         return f'{self.first_name.capitalize()} {self.second_name.capitalize()} '
 
-    def get_related_name(self):
-        print(self.__dir__())
 
 
 class PurchaserAddressModel(models.Model):

@@ -4,17 +4,15 @@ from restaurants.views import (
     MenuViewSet,
     DishViewSet,
     TypeOfDishViewSet,
-    CuisineViewSet,
 )
 
 
 
 router = DefaultRouter()
 router.register('all', RestaurantViewSet)
-router.register('menus', MenuViewSet)
+router.register('menus', MenuViewSet, basename='menu')
 router.register('dishes', DishViewSet)
 router.register('type_of_dish', TypeOfDishViewSet)
-router.register('cuisine', CuisineViewSet)
 
 
 urlpatterns = router.urls

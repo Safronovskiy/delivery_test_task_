@@ -4,12 +4,14 @@ from restaurants.models import (
     MenuModel,
     DishModel,
     TypeOfDishModel,
-    CuisineModel,
 )
-from restaurants.serializer_mixins import AddCreateMethodMixin
+from restaurants.serializer_mixins import AddCreateUpdateMethodsMixin
+from slugify import slugify
 
 
-class RestaurantSerializer(AddCreateMethodMixin, serializers.ModelSerializer):
+
+
+class RestaurantSerializer(AddCreateUpdateMethodsMixin, serializers.ModelSerializer):
     """ ... """
     user = serializers.StringRelatedField(source='user.user_name')
 
@@ -24,40 +26,38 @@ class DishShortSerializer(serializers.ModelSerializer):
         model = DishModel
         fields = ['title', 'price', 'image', 'is_new', 'is_special_offer', 'is_hit']
 
-
-class MenuSerializer(AddCreateMethodMixin, serializers.ModelSerializer):
-    """ ... """
-    restaurant = serializers.StringRelatedField(source='restaurant.title')
-    cuisine = serializers.StringRelatedField(source='cuisine.title')
-    dishes = DishShortSerializer(many=True)
-
-    class Meta:
-        model = MenuModel
-        fields = ['id', 'restaurant', 'title', 'cuisine', 'dishes', 'description', 'date_updated']
-        extra_kwargs = {'dishes': {'read_only': True}}
-
-
-class DishSerializer(AddCreateMethodMixin, serializers.ModelSerializer):
-    """ ... """
-    type = serializers.StringRelatedField(source='type.title')
-
-    class Meta:
-        model = DishModel
-        fields = '__all__'
-
-
-class TypeOfDishSerializer(AddCreateMethodMixin, serializers.ModelSerializer):
+class TypeOfDishSerializer(AddCreateUpdateMethodsMixin, serializers.ModelSerializer):
     """ ... """
     class Meta:
         model = TypeOfDishModel
         fields = '__all__'
 
 
-class CuisineSerializer(AddCreateMethodMixin, serializers.ModelSerializer):
+
+
+
+
+class DishSerializer(AddCreateUpdateMethodsMixin, serializers.ModelSerializer):
     """ ... """
+    type = serializers.PrimaryKeyRelatedField(queryset=TypeOfDishModel.objects.all())
     class Meta:
-        model = CuisineModel
+        model = DishModel
         fields = '__all__'
+
+
+
+
+
+
+
+class MenuSerializer(AddCreateUpdateMethodsMixin, serializers.ModelSerializer):
+    """ ... """
+
+    class Meta:
+        model = MenuModel
+        fields = '__all__'
+        extra_kwargs = {'dishes': {'read_only': True}}
+        depth = 1
 
 
 
